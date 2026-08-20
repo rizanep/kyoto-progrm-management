@@ -1,90 +1,89 @@
-# ProgramHub PRO — Production Program Management Platform
+# SIRAJU ULOOMUDHIN MADRASA KAPPAKKAL — ISHQE HABEEB 26
+### Production Program & Fest Management Platform
 
-A modern, production-ready competition, judging, and program management platform built with **Next.js (App Router, React 19, TypeScript, Tailwind CSS)** and **Supabase (PostgreSQL, Row-Level Security, Supabase Auth, Storage, and Realtime)**.
-
-Designed with a sleek **Facit Theme** with responsive layouts, dark mode, accessible components, and projector/TV display modes.
+A modern, high-performance, production-ready Program Management Platform designed for institutions, madrasas, schools, and cultural fest organizers. Built with **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS**, and **Supabase PostgreSQL**.
 
 ---
 
 ## 🌟 Key Features
 
-1. **Facit UI Theme & Experience**:
-   - Deep charcoal dark rounded sidebar (`#0c131d`) with active pill highlights (`#1e293b`).
-   - Top navigation with organization switcher, live digital clock widget, and status badges.
-   - Fully responsive for mobile devices with a slide-in drawer and sticky bottom navigation bar.
-2. **Academic Structure & Students**:
-   - Institutional classes (Class 5, 6, 7...) and divisions (A, B...).
-   - Student roster with unique admission codes and house affiliations.
-   - **Production CSV Importer Engine**: Drag & drop CSV, validation diagnostics, duplicate detection, and bulk commit.
-3. **House Groups & Leadership**:
-   - Multi-house championship system (Red Phoenix, Blue Dragons, Green Falcons).
-   - House Captain and Assistant Captain appointments linked directly to student profiles.
-4. **Configurable Competition & Programs**:
-   - Dynamic categories (Stage, Non-Stage, Sports, Literary) and divisions (Sub-Junior, Junior, Senior).
-   - Multi-step Program Creation Wizard with criteria weighting and class eligibility constraints.
-   - **Eligibility Engine**: Validates class, division, age bounds, and capacity limits.
-5. **Event Execution & Judging**:
-   - Program state machine (`DRAFT` → `SCHEDULED` → `STARTED` → `JUDGING` → `JUDGED` → `ANNOUNCED`).
-   - Roll call attendance marking.
-   - **Dedicated Judge Scoring Portal**: Keyboard-friendly score entry, automatic total calculation, and multi-judge aggregation (`SUM`, `AVERAGE`, `OLYMPIC_TRIMMED`).
-6. **Results, Standings & Announcements**:
-   - Position point matrix (1st = 5 pts, 2nd = 3 pts, 3rd = 1 pt) & grade bands (Grade A, Grade B...).
-   - Pre-announcement review console and certified announcement with celebration confetti.
-   - Immutable snapshot generation on announcement (`snapshot_data JSONB`).
-7. **Social Media Poster Studio**:
-   - Live SVG / Canvas / PNG poster generation with customizable themes (Royal Gold, Cyber Slate, Emerald).
-   - Download high-definition PNGs for Instagram and WhatsApp status.
-8. **Public Experience & Live TV Projector Feed**:
-   - Public program catalog (`/programs`) and individual result views with confidential data masked.
-   - Championship Leaderboard (`/results`) with animated podium and scoring breakdown.
-   - **Auditorium Projector Display Mode** (`/live`) designed for large screens with real-time updates.
-9. **Production Audit Trail**:
-   - Audits all mutations with user email, timestamp, entity ID, change payload, and IP address.
+### 1. 🔐 Cryptographic JWT & HttpOnly Session Security
+- Server-side cryptographic JWT authentication using HMAC-SHA256 (`jose`).
+- Strict `httpOnly`, `sameSite: lax`, `secure` session cookies.
+- Middleware protection for all `/admin/*` routes with automatic login redirection.
+- Multi-role permission model: `ADMIN`, `JUDGE`, `ORGANIZER`, `FACULTY`.
+
+### 2. 🏛️ Organization & Fest Profile Management
+- Configured for **SIRAJU ULOOMUDHIN MADRASA KAPPAKKAL** and **ISHQE HABEEB 26**.
+- Live dynamic customization of organization title, fest tagline, and administrator phone via Admin Settings or the navigation bar.
+
+### 3. 👥 User & Staff Authorization
+- Admin management of authorized login users (Administrators, Judges, Organizers).
+- Phone number + PIN authentication model.
+
+### 4. 🏰 House Groups & Leadership Roster
+- Full CRUD for house teams: Create, edit, delete, custom theme colors, mottos.
+- Official leadership appointments: House Captains, Vice Captains, and student rosters.
+- Live championship point standings and automatic ranking calculation.
+
+### 5. 📋 Simplified Program Management & Printable Judging Sheets
+- 1-page quick event creation with automatic 100-mark evaluation matrix.
+- Academic class-based division filters (Sub-Junior, Junior, Senior).
+- Multi-filter participant assignment (Class, House Group, Gender).
+- Auto-generated sequential Chest Numbers (#101, #102, #103...).
+- **Printable Judging Sheets**: Print-optimized score sheets with madrasa header, candidate numbers, mark entry columns, and judge signature lines.
+
+### 6. 🏆 Scoring Engine & Real-time Results
+- 0–100 mark entry with validation.
+- Tied score handling (same marks receive identical rank and championship points).
+- Immediate result verification and announcement workflow.
+- Live Auditorium Projector Screen (`/live`) with real-time updates and confetti animations.
+
+### 7. 🌗 Modern UI with Dark / Light Theme
+- Facit-inspired dashboard layout with responsive mobile navigation.
+- Zero-flash dark/light mode toggle with `localStorage` persistence.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
 ### 1. Install Dependencies
 ```bash
 npm install
 ```
 
-### 2. Environment Configuration
-Copy `.env.example` to `.env.local` and add your Supabase credentials:
-```bash
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+### 2. Environment Variables (`.env.local`)
+Configure your Supabase credentials:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+NEXT_PUBLIC_APP_NAME="SIRAJU ULOOMUDHIN MADRASA KAPPAKKAL"
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-### 3. Run Development Server
+### 3. Run Database Migrations & Seeds
+Run `supabase/full_schema_and_seed.sql` in your Supabase SQL Editor.
+
+### 4. Start Development Server
 ```bash
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 4. Run Automated Tests
+* **Admin / Staff Login**: [http://localhost:3000/login](http://localhost:3000/login)
+  * Default Admin Phone: `8281740483`
+  * Default Admin PIN: `8281`
+* **Live Projector Screen**: [http://localhost:3000/live](http://localhost:3000/live)
+* **Public Fest Portal**: [http://localhost:3000/programs](http://localhost:3000/programs)
+
+### 5. Run Automated Tests
 ```bash
 npm run test
 ```
 
-### 5. Build for Production
+### 6. Production Build
 ```bash
 npm run build
-```
-
----
-
-## 📁 Project Structure
-
-```
-src/
-├── app/                  # Next.js App Router (Admin, Public, Live Display)
-├── components/           # Facit UI design system, layout, and shared components
-├── features/             # Domain engines (Eligibility, Judging, Scoring, State Machine, CSV)
-├── lib/                  # Supabase clients, database types, formatters, and reactive store
-└── supabase/
-    ├── migrations/       # Numbered SQL migrations (001 - 007)
-    └── seed.sql          # Sample development & test dataset
 ```
