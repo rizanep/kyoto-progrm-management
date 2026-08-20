@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ProgramHub PRO — Production Program Management Platform
 
-## Getting Started
+A modern, production-ready competition, judging, and program management platform built with **Next.js (App Router, React 19, TypeScript, Tailwind CSS)** and **Supabase (PostgreSQL, Row-Level Security, Supabase Auth, Storage, and Realtime)**.
 
-First, run the development server:
+Designed with a sleek **Facit Theme** with responsive layouts, dark mode, accessible components, and projector/TV display modes.
 
+---
+
+## 🌟 Key Features
+
+1. **Facit UI Theme & Experience**:
+   - Deep charcoal dark rounded sidebar (`#0c131d`) with active pill highlights (`#1e293b`).
+   - Top navigation with organization switcher, live digital clock widget, and status badges.
+   - Fully responsive for mobile devices with a slide-in drawer and sticky bottom navigation bar.
+2. **Academic Structure & Students**:
+   - Institutional classes (Class 5, 6, 7...) and divisions (A, B...).
+   - Student roster with unique admission codes and house affiliations.
+   - **Production CSV Importer Engine**: Drag & drop CSV, validation diagnostics, duplicate detection, and bulk commit.
+3. **House Groups & Leadership**:
+   - Multi-house championship system (Red Phoenix, Blue Dragons, Green Falcons).
+   - House Captain and Assistant Captain appointments linked directly to student profiles.
+4. **Configurable Competition & Programs**:
+   - Dynamic categories (Stage, Non-Stage, Sports, Literary) and divisions (Sub-Junior, Junior, Senior).
+   - Multi-step Program Creation Wizard with criteria weighting and class eligibility constraints.
+   - **Eligibility Engine**: Validates class, division, age bounds, and capacity limits.
+5. **Event Execution & Judging**:
+   - Program state machine (`DRAFT` → `SCHEDULED` → `STARTED` → `JUDGING` → `JUDGED` → `ANNOUNCED`).
+   - Roll call attendance marking.
+   - **Dedicated Judge Scoring Portal**: Keyboard-friendly score entry, automatic total calculation, and multi-judge aggregation (`SUM`, `AVERAGE`, `OLYMPIC_TRIMMED`).
+6. **Results, Standings & Announcements**:
+   - Position point matrix (1st = 5 pts, 2nd = 3 pts, 3rd = 1 pt) & grade bands (Grade A, Grade B...).
+   - Pre-announcement review console and certified announcement with celebration confetti.
+   - Immutable snapshot generation on announcement (`snapshot_data JSONB`).
+7. **Social Media Poster Studio**:
+   - Live SVG / Canvas / PNG poster generation with customizable themes (Royal Gold, Cyber Slate, Emerald).
+   - Download high-definition PNGs for Instagram and WhatsApp status.
+8. **Public Experience & Live TV Projector Feed**:
+   - Public program catalog (`/programs`) and individual result views with confidential data masked.
+   - Championship Leaderboard (`/results`) with animated podium and scoring breakdown.
+   - **Auditorium Projector Display Mode** (`/live`) designed for large screens with real-time updates.
+9. **Production Audit Trail**:
+   - Audits all mutations with user email, timestamp, entity ID, change payload, and IP address.
+
+---
+
+## 🚀 Quick Start
+
+### 1. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Configuration
+Copy `.env.example` to `.env.local` and add your Supabase credentials:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run Automated Tests
+```bash
+npm run test
+```
 
-## Learn More
+### 5. Build for Production
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/                  # Next.js App Router (Admin, Public, Live Display)
+├── components/           # Facit UI design system, layout, and shared components
+├── features/             # Domain engines (Eligibility, Judging, Scoring, State Machine, CSV)
+├── lib/                  # Supabase clients, database types, formatters, and reactive store
+└── supabase/
+    ├── migrations/       # Numbered SQL migrations (001 - 007)
+    └── seed.sql          # Sample development & test dataset
+```
