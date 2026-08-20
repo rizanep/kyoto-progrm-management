@@ -23,17 +23,23 @@ export function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const [org, setOrg] = React.useState(dbStore.getState().organization);
 
   React.useEffect(() => {
+    const isDarkTheme = document.documentElement.classList.contains('dark');
+    setIsDark(isDarkTheme);
+
     return dbStore.subscribe(() => {
       setOrg(dbStore.getState().organization);
     });
   }, []);
 
   const toggleTheme = () => {
-    setIsDark(!isDark);
-    if (!isDark) {
+    const nextDark = !document.documentElement.classList.contains('dark');
+    setIsDark(nextDark);
+    if (nextDark) {
       document.documentElement.classList.add('dark');
+      try { localStorage.setItem('theme', 'dark'); } catch (_) {}
     } else {
       document.documentElement.classList.remove('dark');
+      try { localStorage.setItem('theme', 'light'); } catch (_) {}
     }
   };
 
