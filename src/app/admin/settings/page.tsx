@@ -63,34 +63,52 @@ export default function FullCRUDSettingsPage() {
   const [formUserRole, setFormUserRole] = React.useState<'ADMIN' | 'JUDGE' | 'ORGANIZER' | 'FACULTY'>('JUDGE');
 
   React.useEffect(() => {
+    const s = dbStore.getState();
+    setOrg(s.organization);
+    setProfile(s.profile);
+    setUsers(s.users || [s.profile]);
+    setOrgName(s.organization.name);
+    setOrgCode(s.organization.code);
+    setOrgDesc(s.organization.description || '');
+    setAdminName(s.profile.full_name);
+    setAdminPhone(s.profile.phone || '');
+
     return dbStore.subscribe(() => {
-      const s = dbStore.getState();
-      setOrg(s.organization);
-      setProfile(s.profile);
-      setUsers(s.users || [s.profile]);
-      setCategories(s.categories);
-      setDivisions(s.programDivisions);
-      setPositions(s.positions);
-      setGrades(s.grades);
+      const state = dbStore.getState();
+      setOrg(state.organization);
+      setProfile(state.profile);
+      setUsers(state.users || [state.profile]);
+      setCategories(state.categories);
+      setDivisions(state.programDivisions);
+      setPositions(state.positions);
+      setGrades(state.grades);
     });
   }, []);
 
   const handleSaveOrganization = (e: React.FormEvent) => {
     e.preventDefault();
-    dbStore.setState((prev) => ({
-      ...prev,
-      organization: {
-        ...prev.organization,
-        name: orgName,
-        code: orgCode.toUpperCase(),
-        description: orgDesc,
-      },
-      profile: {
-        ...prev.profile,
-        full_name: adminName,
-        phone: adminPhone,
-      },
-    }));
+    dbStore.setState((prev) => {
+      const updatedUsers = (prev.users || []).map((u) =>
+        u.id === prev.profile.id || u.phone === prev.profile.phone || u.role === 'ADMIN'
+          ? { ...u, full_name: adminName, phone: adminPhone }
+          : u
+      );
+      return {
+        ...prev,
+        organization: {
+          ...prev.organization,
+          name: orgName,
+          code: orgCode.toUpperCase(),
+          description: orgDesc,
+        },
+        profile: {
+          ...prev.profile,
+          full_name: adminName,
+          phone: adminPhone,
+        },
+        users: updatedUsers,
+      };
+    });
     setOrgSaveSuccess(true);
     setTimeout(() => setOrgSaveSuccess(false), 2500);
   };
@@ -134,12 +152,19 @@ export default function FullCRUDSettingsPage() {
 
     if (modalType === 'USER') {
       if (editingItem) {
+        const isCurrentActiveUser = editingItem.id === profile.id || editingItem.phone === profile.phone;
         const updated = users.map((u) =>
           u.id === editingItem.id
             ? { ...u, full_name: formName, phone: formUserPhone, password_pin: formUserPin, role: formUserRole }
             : u
         );
-        dbStore.setState((prev) => ({ ...prev, users: updated }));
+        dbStore.setState((prev) => ({
+          ...prev,
+          users: updated,
+          profile: isCurrentActiveUser
+            ? { ...prev.profile, full_name: formName, phone: formUserPhone, password_pin: formUserPin, role: formUserRole }
+            : prev.profile,
+        }));
       } else {
         const newUser = {
           id: `usr-${Date.now()}`,
