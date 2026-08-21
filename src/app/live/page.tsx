@@ -70,8 +70,11 @@ export default function LiveProjectorDisplayPage() {
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white mt-0.5">
-              Apex Arts & Sports Fest 2026
+              {state.organization.name}
             </h1>
+            <p className="text-xs font-bold text-blue-400">
+              {state.organization.description || 'ISHQE HABEEB 26'}
+            </p>
           </div>
         </div>
 

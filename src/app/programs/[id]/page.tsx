@@ -196,6 +196,11 @@ export default function PublicProgramDetailPage() {
           </Card>
         )}
       </main>
+
+      {/* Footer */}
+      <footer className="py-6 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400">
+        <p>{dbStore.getState().organization.name} • {dbStore.getState().organization.description || 'ISHQE HABEEB 26'}</p>
+      </footer>
     </div>
   );
 }

@@ -120,10 +120,10 @@ export default function AdminDashboardPage() {
             </span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black tracking-tight">
-            Apex Annual Arts & Sports Fest 2026
+            {state.organization.name}
           </h2>
           <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-xl">
-            Execute programs, record multi-judge scores, announce certified results, and stream real-time standings to projectors.
+            {state.organization.description || 'Annual Islamic Arts & Academic Fest — ISHQE HABEEB 26'}
           </p>
         </div>
 

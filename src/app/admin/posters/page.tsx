@@ -29,7 +29,7 @@ function PosterStudioContent() {
     initialProgramId || state.programs[0]?.id || ''
   );
   const [selectedTemplate, setSelectedTemplate] = React.useState('ROYAL_GOLD');
-  const [customSubtitle, setCustomSubtitle] = React.useState('Annual Inter-House Championship 2026');
+  const [customSubtitle, setCustomSubtitle] = React.useState('ISHQE HABEEB 26');
 
   React.useEffect(() => {
     return dbStore.subscribe(() => {
@@ -215,7 +215,7 @@ function PosterStudioContent() {
                 letterSpacing="3"
                 fontWeight="bold"
               >
-                APEX INTERNATIONAL ACADEMY
+                {state.organization.name.toUpperCase()}
               </text>
               <text
                 x="300"

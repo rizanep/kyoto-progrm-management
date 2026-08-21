@@ -54,7 +54,7 @@ export default function PublicProgramsPage() {
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
           </div>
           <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white">
-            Apex Annual Fest <span className="text-blue-600">2026</span>
+            {state.organization.name}
           </span>
         </Link>
 
@@ -174,7 +174,7 @@ export default function PublicProgramsPage() {
 
       {/* Footer */}
       <footer className="py-6 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400">
-        <p>Apex International Academy • Annual Arts & Sports Meet 2026</p>
+        <p>{state.organization.name} • {state.organization.description || 'ISHQE HABEEB 26'}</p>
       </footer>
     </div>
   );

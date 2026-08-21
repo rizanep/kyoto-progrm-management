@@ -4,9 +4,17 @@ import * as React from 'react';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Header } from '@/components/layout/header';
 import { MobileNav } from '@/components/layout/mobile-nav';
+import { dbStore } from '@/lib/store/mockDatabase';
 
 export function FacitShell({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [org, setOrg] = React.useState(dbStore.getState().organization);
+
+  React.useEffect(() => {
+    return dbStore.subscribe(() => {
+      setOrg(dbStore.getState().organization);
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#f4f6f8] dark:bg-[#090d14] flex text-slate-900 dark:text-slate-100 antialiased selection:bg-blue-500 selection:text-white">
@@ -35,8 +43,8 @@ export function FacitShell({ children }: { children: React.ReactNode }) {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Cloud Online
             </span>
-            <span className="font-bold text-slate-700 dark:text-slate-300">
-              Apex International
+            <span suppressHydrationWarning className="font-bold text-slate-700 dark:text-slate-300">
+              {org.name}
             </span>
           </div>
         </footer>

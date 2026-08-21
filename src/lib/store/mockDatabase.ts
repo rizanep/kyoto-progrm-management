@@ -564,7 +564,7 @@ export const initialData: DatabaseState = {
   ],
 };
 
-const STORAGE_KEY = 'programhub_db_v5';
+const STORAGE_KEY = 'programhub_db_v6';
 
 class StoreManager {
   private state: DatabaseState;
